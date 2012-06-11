@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="stylesheet" href="{{STATIC_URL}}css/main.css" />
+<link href='http://fonts.googleapis.com/css?family=Asap:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+
+	<title>{% block title %}FreqAQ{% endblock title %}</title>
+</head>
+
+<body>
+    <header class="full">
+        <div class="twothird right whitebox ">
+            <div class="whitebar">
+                <div class="">
+                    <h1>Frequently</h1>
+                    <h1>Asked</h1>
+                    <h1>Questions</h1>
+                </div>
+            </div>
+        </div>
+        
+    </header>
+    <div class="divider full clear"></div>
+    	<div id="sidebar">
+    		{% block sidebar %}
+    		{% endblock sidebar %}
+    	</div> <!-- end sidebar -->
+    	<div class="clear full">
+    		<div id="content">
+    			{% block content %}...{% endblock content%}
+    		</div>
+    	</div>
+
+<!-- Javascript -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="{{ STATIC_URL }}js/jquery.min.1.7.1.js"><\/script>')</script>  
+    <script src="{{ STATIC_URL }}js/jquery.json-2.2.min.js"></script>
+    <script src="{{ STATIC_URL }}js/jquery.cookie.js"></script>
+    <script src="{{ STATIC_URL }}js/handlebars-1.0.0.beta.6.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.autocomplete-min.js"></script>
+    <script src='{{ STATIC_URL }}js/global.js'></script>
+    <script>$(document).ajaxSend(function(event, xhr, settings) {
+    function safeMethod(method) {
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    if (!safeMethod(settings.type)) {
+        xhr.setRequestHeader("X-CSRFToken", $.cookie('csrftoken'));
+    }
+});</script>
+{% block localjs %}
+{% endblock localjs %}
+
+</body>
+</html>

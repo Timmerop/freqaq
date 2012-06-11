@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block content %}
+        <div class="questions whitebox twothird right">
+          {% for question in questions%}
+              <div id="question-{{question.id}}" class="question whitebar left clear">
+                      <div class="question-cell left">
+                        <div class="question-text">
+                          <p>{{question.question}}</p>
+                        </div>
+                      </div>
+                      <div class="votecell right">
+                        <div class="">
+                          <input type="hidden" value="{{question.id}}">
+                          <a href="#" class="vote vote-up-off" title="This question IS frequently asked">+</a>
+                          <a href="#" class="vote vote-down-off" title="This question IS NOT! frequently asked">-</a>
+                        </div>
+                      </div>
+              </div>
+    {% endfor %}
+        </div> <!--.questions -->
+    
+<div class="divider full clear"></div>
+    
+    <div class="clear twothird right">
+      <div id="add">
+          <div id="add-question whitebox"> {% csrf_token %}
+            <input type="text" class="input-question" id="question" rows="3" placeholder="Ask away"></textarea>
+            <button id="submit" class="btn">?</button>
+            
+          </div>
+      </div>
+      <div id="added" class="hide">
+        <p>Your Question Was Added</p>
+      </div>
+    </div>
+{% endblock content%}
+
+{% block localjs %}
+<script>
+  /* Ajax Submit question*/
+  $(function(evt) {
+    $("#submit").click(function(evt) {
+      evt.preventDefault();
+
+      $.post('/faq/add/', {
+        question: $("#question").val()
+
+      }, function(data) {
+        console.log(data);
+        if (data && data.success) {
+          $("#add").fadeOut();
+          $("#added").fadeIn();
+        }
+      });
+    });
+  });
+  $(function() {
+    $(".vote-up-off").click(function(evt) {
+      evt.preventDefault();
+      var question = $(this).siblings('input').val();
+      var votecount = $(this).siblings('span');
+      $.post('/faq/vote/'+ question +'/1/', {
+
+      }, function(data) {
+        console.log(data);
+        if (data && data.success) {
+          $(votecount).text(data.standing);
+        }
+      });
+    });
+  });
+  $(function() {
+    $(".vote-down-off").click(function(evt) {
+      evt.preventDefault();
+      var question = $(this).siblings('input').val();
+      var votecount = $(this).siblings('span');
+      $.post('/faq/vote/'+ question +'/2/', {
+
+      }, function(data) {
+        console.log(data);
+        if (data && data.success) {
+          $(votecount).text(data.standing);
+        }
+      });
+    });
+  });
+</script>
+{% endblock %}
