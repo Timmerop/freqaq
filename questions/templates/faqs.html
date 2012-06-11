@@ -30,9 +30,6 @@
             
           </div>
       </div>
-      <div id="added" class="hide">
-        <p>Your Question Was Added</p>
-      </div>
     </div>
 {% endblock content%}
 
@@ -49,8 +46,21 @@
       }, function(data) {
         console.log(data);
         if (data && data.success) {
-          $("#add").fadeOut();
-          $("#added").fadeIn();
+          $('.questions').append('<div id="question-'+data.question.id+'" class="question whitebar left clear">'
+                      +'<div class="question-cell left">'
+                        +'<div class="question-text">'
+                          +'<p>'+data.question.question+'</p>'
+                        +'</div>'
+                      +'</div>'
+                      +'<div class="votecell right">'
+                        +'<div class="">'
+                          +'<input type="hidden" value="'+data.question.id+'">'
+                          +'<a href="#" class="vote vote-up-off" title="This question IS frequently asked">+</a>'
+                          +'<a href="#" class="vote vote-down-off" title="This question IS NOT! frequently asked">-</a>'
+                        +'</div>'
+                      +'</div>'
+              +'</div>');
+          $("#question").val('');
         }
       });
     });

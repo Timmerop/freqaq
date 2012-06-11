@@ -39,7 +39,10 @@ def add_question(request):
         try:
             question = Question( question = args['question'])
             question.save()
-            response = {'success': True}
+            q = {}
+            q['question'] = question.question
+            q['id'] = question.id
+            response = {'success': True, 'question' :q}
         except Exception as e:
             print "Could not add question", e
             response = {"success": False }

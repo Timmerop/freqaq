@@ -12,8 +12,8 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'faq',                      # Or path to database file if using sqlite3.
-        'USER': 'postgres',                      # Not used with sqlite3.
+        'NAME': 'freqaq',                      # Or path to database file if using sqlite3.
+        'USER': 'kdog',                      # Not used with sqlite3.
         'PASSWORD': 'password',                  # Not used with sqlite3.
         'HOST': '/tmp/',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
@@ -67,7 +67,7 @@ STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    '/Users/timmerophelan/sites/freqaq/freqaq/static',
+    '/Users/kevin.doran/software/freqaq/freqaq/static',
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -116,7 +116,7 @@ ROOT_URLCONF = 'freqaq.urls'
 WSGI_APPLICATION = 'freqaq.wsgi.application'
 
 TEMPLATE_DIRS = (
-    '/Users/timmerophelan/sites/freqaq/templates',
+    '/Users/kevin.doran/software/freqaq/templates',
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
 )
