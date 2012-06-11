@@ -10,8 +10,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 def index(request):
-    request.session['name'] = 'Fred'
-    questions = Question.objects.order_by('-standing', 'created')
+    questions = Question.objects.filter(standing__gt=-5).order_by('-standing', 'created')
 
     paginator = Paginator(questions, 100)
 
@@ -49,20 +48,27 @@ def add_question(request):
     return HttpResponse(json.dumps(response), mimetype='application/json')
 
 def vote(request, id, vote):
+    user = request.session.session_key
+    question = Question.objects.get(pk=id)
     print vote
+    
     response = {}
-    ses_call = 'question_'+ id
-    print request.session[ ses_call ]
-    if request.session[ses_call] == vote:
-        response = {'success': False}
-    else:
-        new_vote = Vote(
-            question = Question.objects.get(pk=id),
-            vote = vote
-        )
+    try:
+        
+        new_vote, created = Vote.objects.get_or_create(question=question, visitor=user,
+        defaults={'vote': vote} )
+        if created:
+            print "vote created", new_vote.vote 
+        else:
+            print "vote exists, it was", new_vote.vote
+            new_vote.vote = vote
+            print "new vote is", new_vote.vote
         new_vote.save()
-        question = Question.objects.get(pk=id)
-        request.session[ses_call] = vote
-        print request.session[ ses_call ], request.session[ 'name' ]
+        
         response = {"success": True, 'standing' : question.standing }
+        
+    except Exception as e:
+        print "could not add vote", e
+        response = {'success': False}
+
     return HttpResponse(json.dumps(response), mimetype='application/json')

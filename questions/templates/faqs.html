@@ -12,8 +12,9 @@
                       <div class="votecell right">
                         <div class="">
                           <input type="hidden" value="{{question.id}}">
-                          <a href="#" class="vote vote-up-off" title="This question IS frequently asked">+</a>
-                          <a href="#" class="vote vote-down-off" title="This question IS NOT! frequently asked">-</a>
+                          <a href="#" class="vote vote-up" title="This question IS frequently asked">+</a>
+                          {{question.standing}}
+                          <a href="#" class="vote vote-down" title="This question IS NOT! frequently asked">-</a>
                         </div>
                       </div>
               </div>
@@ -55,8 +56,8 @@
                       +'<div class="votecell right">'
                         +'<div class="">'
                           +'<input type="hidden" value="'+data.question.id+'">'
-                          +'<a href="#" class="vote vote-up-off" title="This question IS frequently asked">+</a>'
-                          +'<a href="#" class="vote vote-down-off" title="This question IS NOT! frequently asked">-</a>'
+                          +'<a href="#" class="vote vote-up" title="This question IS frequently asked">+</a>'
+                          +'<a href="#" class="vote vote-down" title="This question IS NOT! frequently asked">-</a>'
                         +'</div>'
                       +'</div>'
               +'</div>');
@@ -66,34 +67,49 @@
     });
   });
   $(function() {
-    $(".vote-up-off").click(function(evt) {
+    $(".vote-up").click(function(evt) {
       evt.preventDefault();
+      var votebtn = $(this);
+      var siblingbtn = $(this).siblings('a');
       var question = $(this).siblings('input').val();
-      var votecount = $(this).siblings('span');
-      $.post('/faq/vote/'+ question +'/1/', {
+      if ($(this).hasClass("vote-on"))
+        { var vote = "n"; }
+      else
+        { var vote = "u"; }
+      $.post('/faq/vote/'+ question +'/'+ vote +'/', {
 
       }, function(data) {
         console.log(data);
         if (data && data.success) {
-          $(votecount).text(data.standing);
+          $(votebtn).toggleClass("vote-on");
+          if ($(siblingbtn).hasClass("vote-on"))
+            { $(siblingbtn).toggleClass("vote-on"); }
         }
       });
     });
   });
   $(function() {
-    $(".vote-down-off").click(function(evt) {
+    $(".vote-down").click(function(evt) {
       evt.preventDefault();
+      var votebtn = $(this);
+      var siblingbtn = $(this).siblings('a');
       var question = $(this).siblings('input').val();
-      var votecount = $(this).siblings('span');
-      $.post('/faq/vote/'+ question +'/2/', {
+      if ($(this).hasClass("vote-on"))
+        { var vote = "n"; }
+      else
+        { var vote = "d"; }
+      $.post('/faq/vote/'+ question +'/'+ vote +'/', {
 
       }, function(data) {
         console.log(data);
         if (data && data.success) {
-          $(votecount).text(data.standing);
+          $(votebtn).toggleClass("vote-on");
+          if ($(siblingbtn).hasClass("vote-on"))
+            { $(siblingbtn).toggleClass("vote-on"); }
         }
       });
     });
   });
+  
 </script>
 {% endblock %}

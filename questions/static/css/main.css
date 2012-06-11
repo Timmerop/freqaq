@@ -80,6 +80,15 @@ a {
 	background-color:#8898dd;
 }
 
+.vote-on {
+	background:orange;
+}
+
+.vote-on:hover {
+	background:yellow;
+}
+
+
 .question-text {
 	margin-right:1em;
 }
