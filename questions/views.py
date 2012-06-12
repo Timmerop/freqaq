@@ -14,13 +14,20 @@ def index(request):
     sort = request.GET.get('sort', '')
     qset = ( Q(question__icontains=query))
 
+    print "sort", sort
     if sort:
         if sort == 'a':
-            questions = Question.objects.filter(qset).filter(standing__gt=-5).order_by('question', 'created')
+            questions = Question.objects.filter(standing__gt=-5).order_by('question')
+        if sort == 'ab':
+            questions = Question.objects.filter(standing__gt=-5).order_by('-question')
         if sort == 'd':
-            questions = Question.objects.filter(qset).filter(standing__gt=-5).order_by('-created')
-        else:
-            questions = Question.objects.filter(qset).filter(standing__gt=-5).order_by('-standing', '-created')
+            questions = Question.objects.filter(standing__gt=-5).order_by('-created')
+        if sort == 'db':
+            questions = Question.objects.filter(standing__gt=-5).order_by('created')
+        if sort == 'v':
+            questions = Question.objects.filter(standing__gt=-5).order_by('-standing', '-created')
+        if sort == 'vb':
+            questions = Question.objects.filter(standing__gt=-5).order_by('standing', 'created')
     else:
         questions = Question.objects.filter(qset).filter(standing__gt=-5).order_by('-standing', '-created')
         sort = 'v'
@@ -62,8 +69,12 @@ def add_question(request):
             response = {"success": False }
     return HttpResponse(json.dumps(response), mimetype='application/json')
 
-def vote(request, id, vote):
+def vote(request, id, vote):  
     user = request.session.session_key
+    if not user:
+        request.session.save()
+        user = request.session.session_key
+
     question = Question.objects.get(pk=id)
     print vote
     

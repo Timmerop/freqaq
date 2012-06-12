@@ -9,9 +9,31 @@
         <div class="third left">
           <div class="nav left">
             <h2>Sort</h2>
-            <a href="/?sort=v" class="left link"><li class="{%if sort == 'v' %}active{%endif%}">Most Frequent</li></a>
-            <a href="/?sort=d" class="left link"><li class="{%if sort == 'd' %}active{%endif%}">Newest</li></a>
-            <a href="/?sort=a" class="left link"><li class="{%if sort == 'a' %}active{%endif%}">Alphabetical</li></a>
+              
+              {%if sort == 'v' %}
+                <a href="/?sort=vb" class="left link"><li class="active">Most Frequent</li></a>
+              {% elif sort == 'vb' %}
+                <a href="/?sort=v" class="left link"><li class="active">Least Frequent</li></a>
+              {% else %}
+                <a href="/?sort=v" class="left link"><li class="">Most Frequent</li></a>
+              {%endif%}
+
+              {%if sort == 'd' %}
+                <a href="/?sort=db" class="left link"><li class="active">Newest</li></a>
+              {% elif sort == 'db' %}
+                <a href="/?sort=d" class="left link"><li class="active">Oldest</li></a>
+              {% else %}
+                <a href="/?sort=d" class="left link"><li class="">Newest</li></a>
+              {%endif%}
+
+              {%if sort == 'a' %}
+                <a href="/?sort=ab" class="left link"><li class="active">Alphabetical</li></a>
+              {% elif sort == 'ab' %}
+                <a href="/?sort=a" class="left link"><li class="active">Zetaupsilonical</li></a>
+              {% else %}
+                <a href="/?sort=a" class="left link"><li class="">Alphabetical</li></a>
+              {%endif%}
+
           </div>
           <div id="search" class="nav left">
             <h2>Search</h2>
