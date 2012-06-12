@@ -5,21 +5,24 @@ from django.template import RequestContext
 from questions.models import *
 import simplejson as json
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-
-
+from django.db.models import Q
 
 
 def index(request):
-    if request.GET:
-        if request.GET['sort'] == 'a':
-            questions = Question.objects.filter(standing__gt=-5).order_by('question', 'created')
-        if request.GET['sort'] == 'd':
-            questions = Question.objects.filter(standing__gt=-5).order_by('-created')
-        if request.GET['sort'] == 'v':
-            questions = Question.objects.filter(standing__gt=-5).order_by('-standing', '-created')
-        sort = request.GET['sort']
+    
+    query = request.GET.get('q', '')
+    sort = request.GET.get('sort', '')
+    qset = ( Q(question__icontains=query))
+
+    if sort:
+        if sort == 'a':
+            questions = Question.objects.filter(qset).filter(standing__gt=-5).order_by('question', 'created')
+        if sort == 'd':
+            questions = Question.objects.filter(qset).filter(standing__gt=-5).order_by('-created')
+        else:
+            questions = Question.objects.filter(qset).filter(standing__gt=-5).order_by('-standing', '-created')
     else:
-        questions = Question.objects.filter(standing__gt=-5).order_by('-standing', '-created')
+        questions = Question.objects.filter(qset).filter(standing__gt=-5).order_by('-standing', '-created')
         sort = 'v'
 
     paginator = Paginator(questions, 100)
@@ -37,6 +40,7 @@ def index(request):
 
     template_args = {
         'questions' : questions,
+        'query' : query,
         'sort': sort
     }
     return render_to_response('faqs.html', template_args, context_instance=RequestContext(request))

@@ -7,31 +7,47 @@
 
         <!-- SIDEBAR -->
         <div class="third left">
-          <div id="nav" class="">
+          <div class="nav left">
+            <h2>Sort</h2>
             <a href="/?sort=v" class="left link"><li class="{%if sort == 'v' %}active{%endif%}">Most Frequent</li></a>
             <a href="/?sort=d" class="left link"><li class="{%if sort == 'd' %}active{%endif%}">Newest</li></a>
             <a href="/?sort=a" class="left link"><li class="{%if sort == 'a' %}active{%endif%}">Alphabetical</li></a>
+          </div>
+          <div id="search" class="nav left">
+            <h2>Search</h2>
+            <form action="." method="GET">
+              <input type="text" class="inputfield" name="q" value="{{ query|escape|upper }}">
+              <input type="submit" class="pillbtn" value="search">
+            </form>
           </div>
         </div>
 
         <!-- MAIN CONTENT -->
         <div class="questions whitebox twothird right">
-          {% for question in questions%}
-              <div id="question-{{question.id}}" class="question whitebar left clear">
-                      <div class="question-cell left">
-                        <div class="question-text">
-                          <p>{{question.question}}</p>
+          {% if questions %}
+            {% for question in questions%}
+                <div id="question-{{question.id}}" class="question whitebar left clear">
+                        <div class="question-cell left">
+                          <div class="question-text">
+                            <p>{{question.question|escape}}</p>
+                          </div>
                         </div>
-                      </div>
-                      <div class="votecell">
-                        <div class="">
-                          <input type="hidden" value="{{question.id}}">
-                          <a href="#" class="vote vote-up" title="This question IS frequently asked">yep</a>
-                          <a href="#" class="vote vote-down" title="This question IS NOT! frequently asked">nope</a>
+                        <div class="votecell">
+                          <div class="">
+                            <input type="hidden" value="{{question.id}}">
+                            <a href="#" class="vote vote-up" title="This question IS frequently asked">yep</a>
+                            <a href="#" class="vote vote-down" title="This question IS NOT! frequently asked">nope</a>
+                          </div>
                         </div>
-                      </div>
+                </div>
+            {% endfor %}
+          {% else %}
+            <div class="">
+              <div class="question-text">
+                <p>No FAQs {% if query %} containing "{{query|escape}}"{% endif %}</p>
               </div>
-    {% endfor %}
+            </div>
+          {% endif %}
         </div> <!--.questions -->
      </div> <!--.full -->
 
@@ -42,7 +58,7 @@
               <div id="add" class="twothird right">
                   <div id="add-question" class="inputfield"> {% csrf_token %}
                     <form>
-                      <input type="text" class="input-question" id="question" rows="3" placeholder="Your FAQ"></textarea>
+                      <input type="text" class="input-question" id="question" rows="3" placeholder="Add your FAQ"></textarea>
                       <button id="submit" class="btn">?</button>
                     </form>
                     

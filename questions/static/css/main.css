@@ -61,7 +61,7 @@ h1 {
 	text-transform:uppercase;
 }
 h2 {
-	font-size:2em;
+	font-size:3em;
 	font-weight:700;
 	line-height:1em;
 	text-transform:uppercase;
@@ -77,16 +77,14 @@ a {
 }
 
 footer {
-	position: absolute;
-	left:5%;
-	right:5%;
-	bottom:1%;
+	padding:20px 0;
 	font-size: .5em;
 }
 
-#nav{
-	padding:0 5%;
+.nav{
+	padding:0 10% 20px 0;
 }
+
 	.link {
 		font-size:2em;
 		margin-right:2.5%;
@@ -110,6 +108,22 @@ footer {
 		float:right;
 		width:12%;
 		min-width:100px;
+	}
+	.nav .inputfield {
+		color:#596491;
+		border:0;
+		padding:2%;
+		background:white;
+	}
+	.pillbtn {
+		color:white;
+		padding:2%;
+		background:#596491;
+		border:0;
+		margin:.25em 0;
+		border-radius:5px;
+		text-transform:uppercase;
+		padding:2% 5%;
 	}
 
 
@@ -152,6 +166,8 @@ footer {
 
 .question:hover {
 	background-color: rgba(255,255,255,.65);
+	color:#8898dd;
+	/*font-style:italic;*/
 }
 
 		.question-text {
@@ -160,13 +176,6 @@ footer {
 
 		.question-text:first-letter {
 			font-weight:900;
-		}
-
-		.question-text:hover {
-			/*font-weight:600;*/
-			font-style:italic;
-			color:#8898dd;
-
 		}
 
 
