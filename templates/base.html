@@ -8,28 +8,29 @@
 </head>
 
 <body>
+<!-- header -->
     <header class="full">
         <div class="twothird right whitebox ">
-            <div class="whitebar">
-                <div class="">
+            <div class="">
+                <div class="whitebar left">
                     <h1>Frequently</h1>
                     <h1>Asked</h1>
                     <h1>Questions</h1>
                 </div>
             </div>
-        </div>
-        
+        </div>  
     </header>
+    <img class="arrow" src="{{STATIC_URL}}img/arrow.png">
     <div class="divider full clear"></div>
-    	<div id="sidebar">
-    		{% block sidebar %}
-    		{% endblock sidebar %}
-    	</div> <!-- end sidebar -->
-    	<div class="clear full">
-    		<div id="content">
-    			{% block content %}...{% endblock content%}
-    		</div>
-    	</div>
+
+<!-- content -->
+	<div id="content">
+		{% block content %}...{% endblock content%}
+	</div>
+
+<footer class="clear">
+<a href="/" class="left link">FAQ</a> <p class="right">©Yall Betcha</p>
+</footer>
 
 <!-- Javascript -->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>

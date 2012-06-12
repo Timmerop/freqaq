@@ -10,7 +10,17 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 def index(request):
-    questions = Question.objects.filter(standing__gt=-5).order_by('-standing', 'created')
+    if request.GET:
+        if request.GET['sort'] == 'a':
+            questions = Question.objects.filter(standing__gt=-5).order_by('question', 'created')
+        if request.GET['sort'] == 'd':
+            questions = Question.objects.filter(standing__gt=-5).order_by('-created')
+        if request.GET['sort'] == 'v':
+            questions = Question.objects.filter(standing__gt=-5).order_by('-standing', '-created')
+        sort = request.GET['sort']
+    else:
+        questions = Question.objects.filter(standing__gt=-5).order_by('-standing', '-created')
+        sort = 'v'
 
     paginator = Paginator(questions, 100)
 
@@ -27,6 +37,7 @@ def index(request):
 
     template_args = {
         'questions' : questions,
+        'sort': sort
     }
     return render_to_response('faqs.html', template_args, context_instance=RequestContext(request))
 
