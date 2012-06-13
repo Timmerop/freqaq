@@ -38,7 +38,7 @@
           <div id="search" class="nav left">
             <h2>Search</h2>
             <form action="." method="GET">
-              <input type="text" class="inputfield" name="q" value="{{ query|escape|upper }}">
+              <input type="text" class="inputfield" name="q" value="{{ query|escape|title }}">
               <input type="submit" class="pillbtn" value="search">
             </form>
           </div>
