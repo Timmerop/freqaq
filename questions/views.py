@@ -11,8 +11,9 @@ from django.db.models import Q
 def index(request):
     
     query = request.GET.get('q', '')
-    sort = request.GET.get('sort', '')
     qset = ( Q(question__icontains=query))
+    sort = request.GET.get('sort', '')
+    
 
     print "sort", sort
     if sort:

@@ -22,7 +22,6 @@ class Vote(models.Model):
         (u'u', u'up'),
         (u'd', u'down'),
         (u'n', u'neither'),
-
     )
 
     question = models.ForeignKey(Question)
